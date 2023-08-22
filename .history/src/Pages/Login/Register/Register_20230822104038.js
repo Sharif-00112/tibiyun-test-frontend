@@ -65,7 +65,7 @@ const Register = () => {
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
                         <Grid sx={{ mt:5 }} xs={12} md={6}>
-                            <Typography sx={{ my:2, fontSize: 25, fontWeight: 600 }} style={{color: '#5CE7ED'}} variant="h4" component="div">
+                            <Typography sx={{ my:2, fontSize: 25, fontWeight: 600 }} style={{color: '#E45865'}} variant="h4" component="div">
                                 User Registration
                             </Typography>
                                                         
@@ -115,7 +115,7 @@ const Register = () => {
                                     variant="standard" />
                                 <br />
                                 <br />
-                                <Button type='submit' sx={{ width:'50%',m:3 }} variant="contained" style={{backgroundColor: '#5CE7ED'}}>
+                                <Button type='submit' sx={{ width:'50%',m:3 }} variant="contained" style={{backgroundColor: '#E45865'}}>
                                     Register
                                 </Button>
                                 <br />

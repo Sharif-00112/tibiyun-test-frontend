@@ -1,0 +1,113 @@
+import React, { useState, useEffect } from 'react';
+import Grid from '@mui/material/Grid';
+import { Button, Container, Typography, TextField, MenuItem as MuiMenuItem } from '@mui/material';
+import { Link } from 'react-router-dom';
+import MenuItem from '../MenuItem/MenuItem';
+
+const WholeMenu = () => {
+    const [menu, setMenu] = useState([]);
+    const [searchCountry, setSearchCountry] = useState('');
+    const [searchFoodName, setSearchFoodName] = useState('');
+    const [searchRestaurant, setSearchRestaurant] = useState('');
+    const [searchMaxPrice, setSearchMaxPrice] = useState('');
+    const [searchReservation, setSearchReservation] = useState('');
+
+    useEffect(() => {
+        const url = `/foodDB.json`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => setMenu(data));
+    }, []);
+
+    const filterMenuItems = () => {
+        return menu.filter(menuItem =>
+            menuItem.foodCountry.toLowerCase().includes(searchCountry.toLowerCase()) &&
+            menuItem.foodName.toLowerCase().includes(searchFoodName.toLowerCase()) &&
+            menuItem.restaurantName.toLowerCase().includes(searchRestaurant.toLowerCase()) &&
+            (searchMaxPrice === '' || parseFloat(menuItem.foodPrice) <= parseFloat(searchMaxPrice)) &&
+            (searchReservation === '' || menuItem.reservationAvailability.toLowerCase() === searchReservation.toLowerCase())
+        );
+    };
+
+    return (
+        <div>
+            <Container sx={{ }}>
+                <TextField
+                    label="Search by Country"
+                    value={searchCountry}
+                    onChange={(e) => setSearchCountry(e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ mb: 2 }}
+                />
+
+                <TextField
+                    label="Search by Food Name"
+                    value={searchFoodName}
+                    onChange={(e) => setSearchFoodName(e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ mb: 2 }}
+                />
+
+                <TextField
+                    label="Search by Restaurant"
+                    value={searchRestaurant}
+                    onChange={(e) => setSearchRestaurant(e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ mb: 2 }}
+                />
+
+                <TextField
+                    label="Maximum Price"
+                    type="number"
+                    value={searchMaxPrice}
+                    onChange={(e) => setSearchMaxPrice(e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ mb: 2 }}
+                />
+
+                <TextField
+                    select
+                    label="Reservation Availability"
+                    value={searchReservation}
+                    onChange={(e) => setSearchReservation(e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ mb: 2 }}
+                >
+                    <MuiMenuItem value="">All</MuiMenuItem>
+                    <MuiMenuItem value="yes">Available</MuiMenuItem>
+                    <MuiMenuItem value="no">Not Available</MuiMenuItem>
+                </TextField>
+                <br /><br />
+            </Container>
+
+            <Container sx={{ flexGrow: 1, my: 4 }}>
+                <Typography sx={{ fontWeight: 500, m: '25px auto 10px auto', color: '#253746' }} gutterBottom variant="h4" component="div">
+                    Available food menu
+                </Typography>
+
+                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 12, sm: 12, md: 12 }}>
+                    {
+                        menu.map(menuItem => <MenuItem
+                            key={menuItem.ID}
+                            menuItem={menuItem}
+                        ></MenuItem>)
+                    }
+                </Grid>
+            </Container>
+            <Typography sx={{ m: 1, color: '#2b6777', fontWeight: 400 }} variant="h6" component="div">
+                Looking for something else?
+            </Typography>
+            <Button variant="contained" style={{ backgroundColor: '#253746' }} sx={{ mb: 4, textDecoration: 'none' }}>
+                <Link to={'/contact'} style={{ textDecoration: 'none', color: 'white' }}>Contact US</Link>
+            </Button>
+            <br /><br />
+        </div>
+    );
+};
+
+export default WholeMenu;

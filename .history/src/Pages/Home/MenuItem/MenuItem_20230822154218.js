@@ -18,7 +18,7 @@ const MenuItem = (props) => {
                     component="img"
                     src={foodImage}
                     alt={foodName}
-                    style={{ width: 'auto', height: 160, margin: '0 auto', marginTop: '7px'}} 
+                    style={{ width: 'auto', height: 160, margin: '0 auto', marginTop: '7px', transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.15)' } }} 
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="div" sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 1 }}>

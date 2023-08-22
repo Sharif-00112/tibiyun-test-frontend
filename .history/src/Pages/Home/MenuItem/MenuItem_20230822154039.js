@@ -13,7 +13,7 @@ const MenuItem = (props) => {
 
     return (
         <Grid xs={6} sm={4} md={3} >
-            <Card sx={{ maxWidth: 300, m:1, transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.05)' } }}>
+            <Card sx={{ maxWidth: 300, m:1, transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.1)' } }}>
                 <CardMedia
                     component="img"
                     src={foodImage}

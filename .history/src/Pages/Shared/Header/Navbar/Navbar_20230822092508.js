@@ -7,15 +7,16 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
+// import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 // import AdbIcon from '@mui/icons-material/Adb'; 
 import { Link } from 'react-router-dom';
+// import useAuth from '../../../hooks/useAuth';
 import { NavLink } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import useAuth from '../../../../hooks/useAuth';
+// import useAuth from '../../../../hooks/useAuth';
 
 const pages = [
   <HashLink 
@@ -25,13 +26,13 @@ const pages = [
   </HashLink>,
   <HashLink 
       style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/home#menu'>
-      <Button sx={{mx:0}} color="inherit">Menu</Button>
+      to = '/home#services'>
+      <Button sx={{mx:0}} color="inherit">Services</Button>
   </HashLink>,
   <HashLink 
       style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/home#address'>
-      <Button sx={{mx:0}} color="inherit">Address</Button>
+      to = '/home#contact'>
+      <Button sx={{mx:0}} color="inherit">Contact</Button>
   </HashLink>
   ];
 
@@ -40,27 +41,12 @@ const settings = [
       style={{ textDecoration:'none', color: 'inherit' }}
       to = '/profile'>
       <Button sx={{mx:0}} color="inherit">Profile</Button>
-  </Link>,
-  <Link 
-      style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/dashboard'>
-      <Button sx={{mx:0}} color="inherit">Dashboard</Button>
-  </Link>,
-  <Link 
-      style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/settings'>
-      <Button sx={{mx:0}} color="inherit">Settings</Button>
-  </Link>,
-  <Link 
-      style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/admin'>
-      <Button sx={{mx:0}} color="inherit">Admin</Button>
   </Link>
  ];
 
 
 const Navbar = () => {
-    const { user, logout } = useAuth();
+    // const { user, logout } = useAuth();
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -81,7 +67,7 @@ const Navbar = () => {
     };
   
     return (
-      <AppBar position="static" sx={{ backgroundColor: '#00B5B5' }}>
+      <AppBar position="static" sx={{ backgroundColor: '#E45865' }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
@@ -172,29 +158,29 @@ const Navbar = () => {
 
             {/* login-logout toggle */}
             {
-              user?.email ?
+            //   user?.email ?
               <NavLink 
                   style={{ textDecoration:'none', color:'white' }}
                   to = '/login'>
-                  <Button sx={{ mx: 0 }} onClick={logout} color="inherit">Logout</Button>
+                  {/* <Button sx={{ mx: 0 }} onClick={logout} color="inherit">Logout</Button> */}
                   <NavLink 
                     style={{ textDecoration:'none', color:'white' }}
                     to = '/dashboard'>
                     <Button sx={{ mx:1 }} color="inherit">Dashboard</Button>
                   </NavLink>
               </NavLink>
-              :
-              <NavLink 
-                  style={{ textDecoration:'none', color:'white' }}
-                  to = '/login'>
-                  <Button sx={{ mx:2 }} color="inherit">Login</Button>
-              </NavLink>
+            //   :
+            //   <NavLink 
+            //       style={{ textDecoration:'none', color:'white' }}
+            //       to = '/login'>
+            //       <Button sx={{ mx:2 }} color="inherit">Login</Button>
+            //   </NavLink>
             }
   
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={user.email} src={user.photoURL} />
+                  {/* <Avatar alt={user.email} src={user.photoURL} /> */}
                 </IconButton>
               </Tooltip>
               <Menu

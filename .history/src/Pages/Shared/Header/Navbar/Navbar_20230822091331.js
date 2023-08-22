@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 // import AdbIcon from '@mui/icons-material/Adb'; 
 import { Link } from 'react-router-dom';
+// import useAuth from '../../../hooks/useAuth';
 import { NavLink } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import useAuth from '../../../../hooks/useAuth';
@@ -25,13 +26,13 @@ const pages = [
   </HashLink>,
   <HashLink 
       style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/home#menu'>
-      <Button sx={{mx:0}} color="inherit">Menu</Button>
+      to = '/home#services'>
+      <Button sx={{mx:0}} color="inherit">Services</Button>
   </HashLink>,
   <HashLink 
       style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/home#address'>
-      <Button sx={{mx:0}} color="inherit">Address</Button>
+      to = '/home#contact'>
+      <Button sx={{mx:0}} color="inherit">Contact</Button>
   </HashLink>
   ];
 
@@ -40,21 +41,6 @@ const settings = [
       style={{ textDecoration:'none', color: 'inherit' }}
       to = '/profile'>
       <Button sx={{mx:0}} color="inherit">Profile</Button>
-  </Link>,
-  <Link 
-      style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/dashboard'>
-      <Button sx={{mx:0}} color="inherit">Dashboard</Button>
-  </Link>,
-  <Link 
-      style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/settings'>
-      <Button sx={{mx:0}} color="inherit">Settings</Button>
-  </Link>,
-  <Link 
-      style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/admin'>
-      <Button sx={{mx:0}} color="inherit">Admin</Button>
   </Link>
  ];
 
@@ -100,7 +86,7 @@ const Navbar = () => {
                 textDecoration: 'none',
               }}
             >
-              Tibiyun Eats
+              GetEasy
             </Typography>
   
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -156,7 +142,7 @@ const Navbar = () => {
                 textDecoration: 'none',
               }}
             >
-              Tibiyun Eats
+              GetEasy
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (

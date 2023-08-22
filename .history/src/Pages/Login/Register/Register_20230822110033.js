@@ -48,7 +48,7 @@ const Register = () => {
             <Container sx={{ my:5 }}>
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
-                        <Grid sx={{ mt:5 }} xs={12} md={12}>
+                        <Grid sx={{ mt:5 }} xs={12} md={6}>
                             <Typography sx={{ my:2, fontSize: 25, fontWeight: 600 }} style={{color: '#5CE7ED'}} variant="h4" component="div">
                                 User Registration
                             </Typography>

@@ -4,16 +4,16 @@ import useAuth from '../../../hooks/useAuth';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
-const PrivateRoute = ({children}) => {
-    const { user, isLoading } = useAuth();
+const AdminRoute = ({children}) => {
+    const { user, admin, isLoading } = useAuth();
     let location = useLocation();
   
     if(isLoading){ return <CircularProgress /> }
     return (
-        user.email ? children 
+        user.email && admin ? children 
         : 
-        <Navigate to="/login" state={{ from: location }} />
+        <Navigate to="/dashboard" state={{ from: location }} />
     );
 };
 
-export default PrivateRoute;
+export default AdminRoute;

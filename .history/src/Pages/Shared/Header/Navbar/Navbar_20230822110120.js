@@ -50,11 +50,6 @@ const settings = [
       style={{ textDecoration:'none', color: 'inherit' }}
       to = '/settings'>
       <Button sx={{mx:0}} color="inherit">Settings</Button>
-  </Link>,
-  <Link 
-      style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/admin'>
-      <Button sx={{mx:0}} color="inherit">Admin</Button>
   </Link>
  ];
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import initializeAuthentication from "../Pages/Login/Firebase/firebase.initialize";
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword, sendEmailVerification, updateProfile, getIdToken } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, FacebookAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword, sendEmailVerification, updateProfile, getIdToken } from "firebase/auth";
 import { useEffect } from "react";
   
 initializeAuthentication(); 
@@ -13,9 +13,12 @@ const useFirebase = () =>{
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [admin, setAdmin] = useState(false);
+    const [superAdmin, setSuperAdmin] = useState(false);
     const [token, setToken] = useState('');
 
     const googleProvider = new GoogleAuthProvider();
+    // const gitProvider = new GithubAuthProvider();
+    const facebookProvider = new FacebookAuthProvider();
     const auth = getAuth();
  
     const signInUsingGoogle = (location, navigate) =>{
@@ -39,6 +42,32 @@ const useFirebase = () =>{
           setError(error.customData.email);
           // The AuthCredential type that was used.
           setError(GoogleAuthProvider.credentialFromError(error));
+      }).finally(() =>{
+        setIsLoading(false);
+      });
+    };
+
+    const signInUsingFacebook = () =>{
+      setIsLoading(true);
+      signInWithPopup(auth, facebookProvider)
+      .then((result) => {
+        // The signed-in user info.
+        setUser(result.user);
+        // save user to the database
+        saveUserToDB(result.user.email, result.user.displayName, 'PUT');
+
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        // const credential = FacebookAuthProvider.credentialFromResult(result);
+        // const accessToken = credential.accessToken;
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        setError(error.code);
+        setError(error.message);
+        // The email of the user's account used.
+        setError(error.customData.email);
+        // The AuthCredential type that was used.
+        setError(FacebookAuthProvider.credentialFromError(error));
       }).finally(() =>{
         setIsLoading(false);
       });
@@ -107,6 +136,22 @@ const useFirebase = () =>{
         setError('Ensure password is of minimum length 8');
         return;
       }
+      // if(!/(?=.*[A-Z])/.test(password)){
+      //   setError('Ensure password has minimum one uppercase letters');
+      //   return;
+      // }
+      // if(!/(?=.*[!@#$%^&*()\-__+.])/.test(password)){
+      //   setError('Ensure password has minimum one special case letter');
+      //   return;
+      // }
+      // if(!/(?=.*[0-9])/.test(password)){
+      //   setError('Ensure password has minimum one digits');
+      //   return;
+      // }
+      // if(!/(?=.*[a-z])/.test(password)){
+      //   setError('Ensure password has minimum one lowercase letters');
+      //   return;
+      // }
       customRegister(email, password);
     }
 
@@ -193,6 +238,13 @@ const useFirebase = () =>{
       .then(res => res.json())
       .then(data => setAdmin(data.admin))
     } ,[user.email])
+ 
+    // check Super Admin
+    useEffect( () =>{
+      fetch(`http://localhost:3010/users/superAdmin/${user.email}`)
+      .then(res => res.json())
+      .then(data => setSuperAdmin(data.superAdmin))
+    } ,[user.email])
 
     const logout = () =>{
       setIsLoading(true);
@@ -221,6 +273,7 @@ const useFirebase = () =>{
 
     return {
       signInUsingGoogle, 
+      signInUsingFacebook,
       customLogin, 
       customRegister,
       handleLoginSubmitBtn,
@@ -235,6 +288,7 @@ const useFirebase = () =>{
       logout,
       user, 
       admin,
+      superAdmin,
       error,
       isLoading,
       token

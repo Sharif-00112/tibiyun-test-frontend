@@ -10,8 +10,6 @@ import Dashboard from './Pages/Dashboard/Dashboard/Dashboard';
 import PrivateRoute from './Pages/Login/PrivateRoute/PrivateRoute';
 import Navbar from './Pages/Shared/Header/Navbar/Navbar';
 import Footer from './Pages/Shared/Footer/Footer';
-import AdminRoute from './Pages/Login/AdminRoute/AdminRoute';
-import AdminPanel from './Pages/Dashboard/AdminPanel/AdminPanel';
  
  
 function App() {
@@ -30,12 +28,6 @@ function App() {
               <PrivateRoute>
                 <Dashboard></Dashboard>
               </PrivateRoute>
-            } />
-            
-            <Route exact path='/admin' element={
-              <AdminRoute>
-                <AdminPanel></AdminPanel>
-              </AdminRoute>
             } />
 
             <Route path = '*' element={<NotFound/>}/>

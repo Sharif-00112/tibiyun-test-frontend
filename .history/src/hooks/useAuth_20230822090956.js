@@ -1,3 +1,5 @@
+//step-6-context
+
 import { useContext } from "react"
 import { AuthContext } from "../../src/contexts/AuthProvider/AuthProvider"
 

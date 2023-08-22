@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 // import AdbIcon from '@mui/icons-material/Adb'; 
 import { Link } from 'react-router-dom';
+// import useAuth from '../../../hooks/useAuth';
 import { NavLink } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import useAuth from '../../../../hooks/useAuth';
@@ -28,11 +29,26 @@ const pages = [
       to = '/home#menu'>
       <Button sx={{mx:0}} color="inherit">Menu</Button>
   </HashLink>,
+  // <HashLink 
+  //     style={{ textDecoration:'none', color: 'inherit' }}
+  //     to = '/home#appointment'>
+  //     <Button sx={{mx:0}} color="inherit">Appointment</Button>
+  // </HashLink>,
   <HashLink 
       style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/home#address'>
-      <Button sx={{mx:0}} color="inherit">Address</Button>
-  </HashLink>
+      to = '/home#contact'>
+      <Button sx={{mx:0}} color="inherit">Contact</Button>
+  </HashLink>,
+  // <HashLink 
+  //   style={{ textDecoration:'none', color: 'inherit' }}
+  //   to = '/home#FAQ'>
+  //   <Button sx={{mx:0}} color="inherit">FAQ</Button>
+  // </HashLink>,  
+  // <Link 
+  //     style={{ textDecoration:'none', color: 'inherit' }}
+  //     to = '/about'>
+  //     <Button sx={{mx:0}} color="inherit">About</Button>
+  // </Link>
   ];
 
 const settings = [
@@ -50,11 +66,6 @@ const settings = [
       style={{ textDecoration:'none', color: 'inherit' }}
       to = '/settings'>
       <Button sx={{mx:0}} color="inherit">Settings</Button>
-  </Link>,
-  <Link 
-      style={{ textDecoration:'none', color: 'inherit' }}
-      to = '/admin'>
-      <Button sx={{mx:0}} color="inherit">Admin</Button>
   </Link>
  ];
 

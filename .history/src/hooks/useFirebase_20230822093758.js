@@ -1,6 +1,6 @@
 import { useState } from "react";
 import initializeAuthentication from "../Pages/Login/Firebase/firebase.initialize";
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword, sendEmailVerification, updateProfile, getIdToken } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, FacebookAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword, sendEmailVerification, updateProfile, getIdToken } from "firebase/auth";
 import { useEffect } from "react";
   
 initializeAuthentication(); 
@@ -12,10 +12,13 @@ const useFirebase = () =>{
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(true);
-    const [admin, setAdmin] = useState(false);
+    // const [admin, setAdmin] = useState(false);
+    // const [superAdmin, setSuperAdmin] = useState(false);
     const [token, setToken] = useState('');
 
     const googleProvider = new GoogleAuthProvider();
+    // const gitProvider = new GithubAuthProvider();
+    const facebookProvider = new FacebookAuthProvider();
     const auth = getAuth();
  
     const signInUsingGoogle = (location, navigate) =>{
@@ -28,8 +31,8 @@ const useFirebase = () =>{
           // The signed-in user info.
           setUser(result.user);
           // save user to the database
-          saveUserToDB(result.user.email, result.user.displayName, 'PUT');
-          const destination = location?.state?.from || '/dashboard';
+        //   saveUserToDB(result.user.email, result.user.displayName, 'PUT');
+          const destination = location?.state?.from || '/profile';
           navigate(destination);
       }).catch((error) => {
           // Handle Errors here.
@@ -39,6 +42,32 @@ const useFirebase = () =>{
           setError(error.customData.email);
           // The AuthCredential type that was used.
           setError(GoogleAuthProvider.credentialFromError(error));
+      }).finally(() =>{
+        setIsLoading(false);
+      });
+    };
+
+    const signInUsingFacebook = () =>{
+      setIsLoading(true);
+      signInWithPopup(auth, facebookProvider)
+      .then((result) => {
+        // The signed-in user info.
+        setUser(result.user);
+        // save user to the database
+        // saveUserToDB(result.user.email, result.user.displayName, 'PUT');
+
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        // const credential = FacebookAuthProvider.credentialFromResult(result);
+        // const accessToken = credential.accessToken;
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        setError(error.code);
+        setError(error.message);
+        // The email of the user's account used.
+        setError(error.customData.email);
+        // The AuthCredential type that was used.
+        setError(FacebookAuthProvider.credentialFromError(error));
       }).finally(() =>{
         setIsLoading(false);
       });
@@ -79,7 +108,7 @@ const useFirebase = () =>{
         // console.log(user);
         setUser(userCredential.user);
         // save user to the database
-        saveUserToDB(userCredential.user.email, userCredential.user.displayName, 'POST')
+        // saveUserToDB(userCredential.user.email, userCredential.user.displayName, 'POST')
         // clear error message
         setError('');
         alert("Registration successful. Please login now");
@@ -107,6 +136,22 @@ const useFirebase = () =>{
         setError('Ensure password is of minimum length 8');
         return;
       }
+      // if(!/(?=.*[A-Z])/.test(password)){
+      //   setError('Ensure password has minimum one uppercase letters');
+      //   return;
+      // }
+      // if(!/(?=.*[!@#$%^&*()\-__+.])/.test(password)){
+      //   setError('Ensure password has minimum one special case letter');
+      //   return;
+      // }
+      // if(!/(?=.*[0-9])/.test(password)){
+      //   setError('Ensure password has minimum one digits');
+      //   return;
+      // }
+      // if(!/(?=.*[a-z])/.test(password)){
+      //   setError('Ensure password has minimum one lowercase letters');
+      //   return;
+      // }
       customRegister(email, password);
     }
 
@@ -188,11 +233,18 @@ const useFirebase = () =>{
     },[auth]);
  
     // check Admin
-    useEffect( () =>{
-      fetch(`http://localhost:3010/users/${user.email}`)
-      .then(res => res.json())
-      .then(data => setAdmin(data.admin))
-    } ,[user.email])
+    // useEffect( () =>{
+    //   fetch(`http://localhost:3010/users/${user.email}`)
+    //   .then(res => res.json())
+    //   .then(data => setAdmin(data.admin))
+    // } ,[user.email])
+ 
+    // check Super Admin
+    // useEffect( () =>{
+    //   fetch(`http://localhost:3010/users/superAdmin/${user.email}`)
+    //   .then(res => res.json())
+    //   .then(data => setSuperAdmin(data.superAdmin))
+    // } ,[user.email])
 
     const logout = () =>{
       setIsLoading(true);
@@ -207,20 +259,22 @@ const useFirebase = () =>{
         });
     }
 
-    const saveUserToDB = (email, displayName, method) =>{
-      const user = {email, displayName};
-      fetch('http://localhost:3010/users', {
-          method: method,
-          headers: {
-              'content-type' : 'application/json'
-          },
-          body: JSON.stringify(user)
-      })
-      .then()
-    }
+    // save user to DataBase
+    // const saveUserToDB = (email, displayName, method) =>{
+    //   const user = {email, displayName};
+    //   fetch('http://localhost:3010/users', {
+    //       method: method,
+    //       headers: {
+    //           'content-type' : 'application/json'
+    //       },
+    //       body: JSON.stringify(user)
+    //   })
+    //   .then()
+    // }
 
     return {
       signInUsingGoogle, 
+      signInUsingFacebook,
       customLogin, 
       customRegister,
       handleLoginSubmitBtn,
@@ -234,7 +288,8 @@ const useFirebase = () =>{
       setUserName,
       logout,
       user, 
-      admin,
+    //   admin,
+    //   superAdmin,
       error,
       isLoading,
       token

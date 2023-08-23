@@ -13,7 +13,7 @@ const Footer = () => {
                 padding: '8px',
                 marginTop: '15px'
             }}
-        >   
+        >   <br /><br />
             <Typography sx={{ my: 0, mt: 0, fontSize: 14, fontWeight: 400 }} variant="" component="div">
                 Copyright 2023 | All Rights Reserved by <a style={{textDecoration: 'none'}} href="http://www.sharif-hossain.com">Md Sharif Hossain</a>
             </Typography>

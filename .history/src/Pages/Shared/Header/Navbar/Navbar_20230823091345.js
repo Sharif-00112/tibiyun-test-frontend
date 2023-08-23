@@ -211,7 +211,7 @@ const Navbar = () => {
                   horizontal: 'right',
                 }}
                 keepMounted
-                transformOrigin={{ 
+                transformOrigin={{
                   vertical: 'top',
                   horizontal: 'right',
                 }}

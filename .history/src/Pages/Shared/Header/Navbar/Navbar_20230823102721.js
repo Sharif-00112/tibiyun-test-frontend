@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-// import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,7 +11,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-// import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
@@ -44,8 +43,18 @@ const pages = [
 const settings = [
   <Link 
       style={{ textDecoration:'none', color: 'inherit' }}
+      to = '/profile'>
+      <Button sx={{mx:0}} color="inherit">Profile</Button>
+  </Link>,
+  <Link 
+      style={{ textDecoration:'none', color: 'inherit' }}
       to = '/dashboard'>
       <Button sx={{mx:0}} color="inherit">Dashboard</Button>
+  </Link>,
+  <Link 
+      style={{ textDecoration:'none', color: 'inherit' }}
+      to = '/settings'>
+      <Button sx={{mx:0}} color="inherit">Settings</Button>
   </Link>,
   <Link 
       style={{ textDecoration:'none', color: 'inherit' }}
@@ -55,12 +64,10 @@ const settings = [
  ];
 
 const Navbar = () => {
-  // const { user, admin, logout } = useAuth();
-  const { user, logout } = useAuth();
-
+  const { user, admin, logout } = useAuth();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  // const [notification, setNotification] = useState('');
+  const [notification, setNotification] = useState('');
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -78,30 +85,29 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
-  // ADMIN notification
-  // useEffect(() => {
-  //   const socket = new WebSocket('ws://localhost:3010/searchResults');
+  useEffect(() => {
+    const socket = new WebSocket('ws://localhost:3010');
 
-  //   socket.onopen = () => {
-  //     console.log('Connected to WebSocket server');
-  //   };
+    socket.onopen = () => {
+      console.log('Connected to WebSocket server');
+    };
 
-  //   socket.onmessage = (event) => {
-  //     const message = JSON.parse(event.data);
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
 
-  //     if (message.type === 'newEntryNotification' && admin) {
-  //       setNotification('New search added!');
-  //     }
-  //   };
+      if (message.type === 'newEntryNotification' && admin) {
+        setNotification('New search added!');
+      }
+    };
 
-  //   socket.onclose = () => {
-  //     console.log('Disconnected from WebSocket server');
-  //   };
+    socket.onclose = () => {
+      console.log('Disconnected from WebSocket server');
+    };
 
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, [admin]);
+    return () => {
+      socket.close();
+    };
+  }, [admin]);
 
   return (
     <AppBar position="static" sx={{ backgroundColor: '#E45865' }}>
@@ -245,13 +251,13 @@ const Navbar = () => {
             </Menu>
           </Box>
 
-          {/* {admin && notification && (
+          {admin && notification && (
             <Tooltip title={notification}>
               <IconButton sx={{ p: 0 }}>
                 <NotificationsIcon />
               </IconButton>
             </Tooltip>
-          )} */}
+          )}
         </Toolbar>
       </Container>
     </AppBar>

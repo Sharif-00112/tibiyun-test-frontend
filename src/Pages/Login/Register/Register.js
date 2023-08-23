@@ -14,7 +14,7 @@ import Alert from '@mui/material/Alert';
 const Register = () => {
     const { error, customRegister, isLoading, user, signInUsingGoogle } = useAuth();
 
-    useTitle("Register|GetEasy");
+    useTitle("Register|Tibiyun Eats");
 
     //redirect after login
     let location = useLocation();

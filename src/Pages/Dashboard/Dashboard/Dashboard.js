@@ -10,8 +10,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useAuth from '../../../hooks/useAuth';
+import { useTitle } from '../../../hooks/useTitle';
 
 const Dashboard = () => {
+    useTitle('Dashboard|Tibiyun Eats');
     const { user } = useAuth();
     const [searchHistories, setSearchHistories] = useState([]);
 

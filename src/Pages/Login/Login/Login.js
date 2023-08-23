@@ -16,7 +16,7 @@ const Login = () => {
     //destructuring hooks
     const { customLogin, user, error, isLoading, signInUsingGoogle } = useAuth();
 
-    useTitle("Login|GetEasy");
+    useTitle("Login|Tibiyun Eats");
 
     //redirect after login
     let location = useLocation();

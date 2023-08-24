@@ -27,9 +27,9 @@ const SearchMenu = () => {
             .then(data => {
                 setMenu(data);
     
-                const uniqueCountries = Array.from(new Set(data.map(item => item.foodCountry)));
-                const uniqueFoodNames = Array.from(new Set(data.map(item => item.foodName)));
-                const uniqueRestaurants = Array.from(new Set(data.map(item => item.restaurantName)));
+                const uniqueCountries = Array.from(new Set(data.map(item => item.foodCountry.toLowerCase())));
+                const uniqueFoodNames = Array.from(new Set(data.map(item => item.foodName.toLowerCase())));
+                const uniqueRestaurants = Array.from(new Set(data.map(item => item.restaurantName.toLowerCase())));
     
                 setUniqueCountries(uniqueCountries);
                 setUniqueFoodNames(uniqueFoodNames);

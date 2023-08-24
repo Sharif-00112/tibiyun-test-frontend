@@ -15,10 +15,6 @@ const SearchMenu = () => {
     const [searchMaxPrice, setSearchMaxPrice] = useState('');
     const [searchReservation, setSearchReservation] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    const [uniqueCountries, setUniqueCountries] = useState([]);
-    const [uniqueFoodNames, setUniqueFoodNames] = useState([]);
-    const [uniqueRestaurants, setUniqueRestaurants] = useState([]);
-
 
     useEffect(() => {
         const url = `/foodDB.json`;
@@ -26,17 +22,9 @@ const SearchMenu = () => {
             .then(res => res.json())
             .then(data => {
                 setMenu(data);
-    
-                const uniqueCountries = Array.from(new Set(data.map(item => item.foodCountry)));
-                const uniqueFoodNames = Array.from(new Set(data.map(item => item.foodName)));
-                const uniqueRestaurants = Array.from(new Set(data.map(item => item.restaurantName)));
-    
-                setUniqueCountries(uniqueCountries);
-                setUniqueFoodNames(uniqueFoodNames);
-                setUniqueRestaurants(uniqueRestaurants);
+                // setSearchResults(data);
             });
     }, []);
-    
 
     const filterMenuItems = () => {
         return menu.filter(menuItem =>
@@ -97,56 +85,31 @@ const SearchMenu = () => {
                 </Typography>
 
                 <TextField
-                    select
                     label="Search by Country"
                     value={searchCountry}
                     onChange={(e) => setSearchCountry(e.target.value)}
                     fullWidth
                     variant="outlined"
                     sx={{ m: 1, width: '50%' }}
-                >
-                    <MuiMenuItem value="">All</MuiMenuItem>
-                    {uniqueCountries.map(country => (
-                        <MuiMenuItem key={country} value={country}>
-                            {country}
-                        </MuiMenuItem>
-                    ))}
-                </TextField>
+                />
 
                 <TextField
-                    select
                     label="Search by Food Name"
                     value={searchFoodName}
                     onChange={(e) => setSearchFoodName(e.target.value)}
                     fullWidth
                     variant="outlined"
                     sx={{ m: 1, width: '50%' }}
-                >
-                    <MuiMenuItem value="">All</MuiMenuItem>
-                    {uniqueFoodNames.map(foodName => (
-                        <MuiMenuItem key={foodName} value={foodName}>
-                            {foodName}
-                        </MuiMenuItem>
-                    ))}
-                </TextField>
+                />
 
                 <TextField
-                    select
                     label="Search by Restaurant"
                     value={searchRestaurant}
                     onChange={(e) => setSearchRestaurant(e.target.value)}
                     fullWidth
                     variant="outlined"
                     sx={{ m: 1, width: '50%' }}
-                >
-                    <MuiMenuItem value="">All</MuiMenuItem>
-                    {uniqueRestaurants.map(restaurant => (
-                        <MuiMenuItem key={restaurant} value={restaurant}>
-                            {restaurant}
-                        </MuiMenuItem>
-                    ))}
-                </TextField>
-
+                />
 
                 <TextField
                     label="Maximum Price"
@@ -179,7 +142,7 @@ const SearchMenu = () => {
                     onClick={handleSearchSubmit}
                     sx={{ m: 2 }}
                 >
-                    Search 
+                    Search
                 </Button> 
                 <Button
                     variant="contained"
